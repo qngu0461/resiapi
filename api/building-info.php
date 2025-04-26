@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 $host = 'ep-late-shadow-a7xntzmh-pooler.ap-southeast-2.aws.neon.tech';
 $dbname = 'neondb';
 $user = 'neondb_owner';
-$password = 'pg_7r5qCvcmHlbE';
+$password = 'npg_7r5qCvcmHlbE';
 $port = '5432';
 
 try {
