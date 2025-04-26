@@ -1,14 +1,14 @@
 <?php
 header('Content-Type: application/json');
 
-$host = "ep-late-shadow-a7xntzmh-pooler.ap-southeast-2.aws.neon.tech";
+$host = 'ep-late-shadow-a7xntzmh-pooler.ap-southeast-2.aws.neon.tech';
 $dbname = 'neondb';
 $user = 'neondb_owner';
-$password = 'npg_7r5qCvcmHlbE';
+$password = 'pg_7r5qCvcmHlbE';
 $port = '5432';
 
 try {
-    $pdo = new PDO("pgsl:host=$host;port=$port;dbname=$dbname;sslmode=require",$user, $password);
+    $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $stmt = $pdo->query("SELECT address, description, amenities, committee_details, last_updated FROM building_info ORDER BY id");
