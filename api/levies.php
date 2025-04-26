@@ -1,7 +1,7 @@
 <?php
-header('Content_type: application.json');
+header('Content_Type: application.json');
 
-$host = "ep-late-shadow-a7xntzmh-pooler.ap-southeast-2.aws.neon.tech"
+$host = "ep-late-shadow-a7xntzmh-pooler.ap-southeast-2.aws.neon.tech";
 $dbname = 'neondb';
 $user = 'neondb_owner';
 $password = 'npg_7r5qCvcmHlbE';
@@ -20,7 +20,7 @@ try {
             GROUP BY quarter
             ORDER BY quarter
     ");
-    $levies = $stmt->fetchALL(PDO::FETCH_ASSOC);
+    $levies = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $result = [];
     $quarters = ['2025-Q1', '2025-Q2', '2025-Q3', '2025-Q4'];
