@@ -7,7 +7,7 @@ if (!isset($_COOKIE['user_role']) || $_COOKIE['user_role'] !== 'committee_member
 
 // Minimal FPDFn class embedded directly to avoid file inclusion issues
 
-class FDPD {
+class FPDF {
 
     protected $page;
     protected $font = [];
@@ -23,7 +23,7 @@ class FDPD {
         $this->page++;
         $this->x = 10;
         $this->y = 10;
-        %this->content .- "%Page $this->page\n";
+        $this->content .= "%Page $this->page\n";
     }
 
     function SetFont($family, $style = '', $size = 0) {
@@ -53,12 +53,13 @@ class FDPD {
 }
 
 $host = "ep-late-shadow-a7xntzmh-pooler.ap-southeast-2.aws.neon.tech";
-$db = 'neondb';
+$dbname = 'neondb';
 $user = 'neondb_owner';
-$pass= 'npg_7r5qCvcmHlbE';
+$password = 'npg_7r5qCvcmHlbE';
+$port = '5432';
 
 try {
-    $pdo = new PDO("pgsl:host=$host;port=$port;dbname=$dbname;sslmode=require",$user,$password);
+    $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require",$user,$password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $stmt = $pdo->query("
@@ -137,7 +138,7 @@ try {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($notices as $notices): ?>
+                        <?php foreach ($notices as $notice): ?>
                             <tr>
                                 <td class="border border-gray-300 px-4 py-3"><?= htmlspecialchars($notice['owner_name']) ?></td>
                                 <td class="border border-gray-300 px-4 py-3"><?= htmlspecialchars($notice['email']) ?></td>
@@ -159,9 +160,10 @@ try {
                 </a>
             </div>
         </div>
-        <footer class="bg-gray-200 py-4 text-center text-gray-600 text-sm">
-            Strata Manager &copy; 2025
-        </footer>
-    </body>
+    </div>
+    <footer class="bg-gray-200 py-4 text-center text-gray-600 text-sm">
+        Strata Manager &copy; 2025
+    </footer>
+</body>
 </html>
                              
