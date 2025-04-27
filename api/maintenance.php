@@ -37,7 +37,7 @@ try {
         $stmt->bindValue(':query', str_replace(' ', ' $ ',$search_query));
     }
     $stmt->execute();
-    $request = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die('Database error: ' . $e->getMessage());
 }
