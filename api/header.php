@@ -1,14 +1,11 @@
 <?php
-// Check for cookie-based authentication
 if (!isset($_COOKIE['user_role']) || $_COOKIE['user_role'] !== 'committee_member') {
     header('Location: /login.php');
     exit;
 }
 
-// Get the current page for active navigation
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +13,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strata Manager - Committee Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@heroicons/react@2.0.13/outline/index.min.js"></script>
     <style>
         .sidebar {
@@ -52,7 +49,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen flex">
-    <!-- Sidebar -->
     <aside class="sidebar w-64 bg-white text-gray-800 fixed inset-y-0 left-0 flex flex-col shadow-lg">
         <div class="p-6 text-2xl font-semibold text-gray-900 border-b border-gray-200 flex items-center space-x-3">
             <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -97,9 +93,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
     </aside>
 
-    <!-- Main Content -->
     <div class="flex-1 ml-64">
-        <!-- Top Bar -->
         <header class="bg-white shadow p-4 flex justify-between items-center">
             <h1 class="text-xl font-semibold text-gray-800">Committee Dashboard</h1>
             <div class="flex items-center space-x-4">
@@ -112,5 +106,4 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </div>
         </header>
 
-        <!-- Content Area -->
         <main class="container mx-auto p-6">
