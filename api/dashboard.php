@@ -11,20 +11,20 @@ try {
     $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Buget Summary (Latest Quarter)
+    // Budget Summary (Latest Quarter)
     $budgetStmt = $pdo->query("
-    SELECT 
-        b.quarter,
-        b.admin_target,
-        b.capital_target,
-        COALESCE(SUM(CASE WHEN l.status = 'paid' THEN l.admin ELSE 0 END), 0) AS admin_collected,
-        COALESCE(SUM(CASE WHEN l.status = 'paid' THEN l.capital ELSE 0 END), 0) AS capital_collected
-    FROM budget b
-    LEFT JOIN levies l ON b.quarter = l.quarter
-    GROUP BY b.quarter, b.admin_target, b.capital_target
-    ORDER BY b.quarter DESC
-    LIMIT 1
-");
+        SELECT 
+            b.quarter,
+            b.admin_target,
+            b.capital_target,
+            COALESCE(SUM(l.admin) FILTER (WHERE l.status = 'paid'), 0) AS admin_collected,
+            COALESCE(SUM(l.capital) FILTER (WHERE l.status = 'paid'), 0) AS capital_collected
+        FROM budget b
+        LEFT JOIN levies l ON b.quarter = l.quarter
+        GROUP BY b.quarter, b.admin_target, b.capital_target
+        ORDER BY b.quarter DESC
+        LIMIT 1
+    ");
     $budgetSummary = $budgetStmt->fetch(PDO::FETCH_ASSOC);
 
     // Maintenance Requests (Recent 5)
@@ -53,10 +53,10 @@ try {
 
 <div class="fade-in">
     <h1 class="text-3xl font-bold text-gray-800 mb-6">🏠 Dashboard</h1>
-    <p class="text-gray-600 mb-8">Overview of Resilink management activities.</p>
+    <p class="text-gray-600 mb-8">Overview of strata management activities.</p>
 
     <!-- Summary Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div class="bg-white rounded-lg shadow p-6">
             <h2 class="text-xl font-semibold text-gray-800 mb-4">Budget Summary (<?php echo htmlspecialchars($budgetSummary['quarter']); ?>)</h2>
             <p class="text-gray-600">Admin Target: $<?php echo number_format($budgetSummary['admin_target'], 2); ?></p>
@@ -69,11 +69,11 @@ try {
             <canvas id="levyStatusChart" class="w-full h-32"></canvas>
         </div>
         <div class="bg-white rounded-lg shadow p-6">
-            <h2 class="text-xl font-semibold text-gray-800 mg-4">Recent Maintenance Requests</h2>
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Maintenance Requests</h2>
             <ul class="space-y-2">
                 <?php foreach ($recentMaintenance as $request): ?>
-                    <li class="space-y-2">
-                        <li class="font-medium"><?php echo htmlspecialchars($request['owner_name']); ?>:</span>
+                    <li class="text-gray-600">
+                        <span class="font-medium"><?php echo htmlspecialchars($request['owner_name']); ?>:</span>
                         <?php echo htmlspecialchars($request['description']); ?> (<?php echo htmlspecialchars($request['status']); ?>)
                     </li>
                 <?php endforeach; ?>
@@ -89,7 +89,7 @@ try {
 </div>
 
 <script>
-    // levy Status Chart
+    // Levy Status Chart
     const levyCtx = document.getElementById('levyStatusChart').getContext('2d');
     new Chart(levyCtx, {
         type: 'pie',
@@ -98,7 +98,7 @@ try {
             datasets: [{
                 data: [
                     <?php echo $levyStatusCounts['paid']; ?>,
-                    <?php echo $levyStatusCounts['pending']; ?>
+                    <?php echo $levyStatusCounts['pending']; ?>,
                     <?php echo $levyStatusCounts['overdue']; ?>
                 ],
                 backgroundColor: [
@@ -126,13 +126,13 @@ try {
         type: 'bar',
         data: {
             labels: budgetStmt.map(d => d.quarter),
-            datasets [
+            datasets: [
                 {
-                label: 'Admin Target ($)',
-                data: budgetStmt.map(d => d.admin_target),
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
+                    label: 'Admin Target ($)',
+                    data: budgetStmt.map(d => d.admin_target),
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
                 },
                 {
                     label: 'Admin Collected ($)',
@@ -164,7 +164,7 @@ try {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: "Amount ($)"
+                        text: 'Amount ($)'
                     }
                 }
             },
@@ -178,5 +178,3 @@ try {
 </script>
 
 <?php require_once 'footer.php'; ?>
-        
-
