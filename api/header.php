@@ -11,7 +11,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strata Manager - Committee Dashboard</title>
+    <title>Resilink Manager - Committee Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@heroicons/react@2.0.13/outline/index.min.js"></script>
@@ -54,7 +54,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
             </svg>
-            <span>Strata Manager</span>
+            <span>Resilink Manager</span>
         </div>
         <nav class="flex-grow p-4">
             <a href="dashboard.php" class="block py-2.5 px-4 rounded mb-2 flex items-center space-x-3 <?php echo $current_page == 'dashboard.php' ? 'active' : 'hover:bg-gray-100'; ?>">
