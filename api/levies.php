@@ -5,10 +5,10 @@ header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization");
-$host = 'ep-long-tooth-a50lsk1q-pooler.us-east-2.aws.neon.tech';
+$host = "ep-late-shadow-a7xntzmh-pooler.ap-southeast-2.aws.neon.tech";
 $dbname = 'neondb';
 $user = 'neondb_owner';
-$password = 'npg_xGiQ5DLwfpN4';
+$password = 'npg_7r5qCvcmHlbE';
 $port = '5432';
 
 try {
