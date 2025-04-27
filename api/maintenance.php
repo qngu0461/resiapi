@@ -21,8 +21,8 @@ try {
 
     // Build the SQL query with full-text search
     $sql = "
-        SELECT s.owner_name, m.description m.status m.created_at
-        FROM maintenance requests m
+        SELECT s.owner_name, m.description, m.status, m.created_at
+        FROM maintenance_requests m
         JOIN strata_roll s ON s.owner_id = s.id
     ";
     if ($search_query) {
