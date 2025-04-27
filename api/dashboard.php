@@ -13,18 +13,18 @@ try {
 
     // Buget Summary (Latest Quarter)
     $budgetStmt = $pdo->query("
-        SELECT
-            b.quarter,
-            b.admin_target,
-            b.capital_target,
-            COALESCE(SUM(l.admin) FILTER (WHERE l.status = 'paid'), 0) AS admin_collected,
-            COALESCE(SUM(l.capital) FILTER (WHERE l.status = 'paid'), 0) AS capital_collected
-        FROM budget b
-        LEFT JOIN  levies l ON b.quarter = l.quarter
-        GROUP BY b.quarter, b.admin_target, b.capital_target
-        ORDER BY b.quarter DESC
-        LIMIT 1
-    ");
+    SELECT 
+        b.quarter,
+        b.admin_target,
+        b.capital_target,
+        COALESCE(SUM(CASE WHEN l.status = 'paid' THEN l.admin ELSE 0 END), 0) AS admin_collected,
+        COALESCE(SUM(CASE WHEN l.status = 'paid' THEN l.capital ELSE 0 END), 0) AS capital_collected
+    FROM budget b
+    LEFT JOIN levies l ON b.quarter = l.quarter
+    GROUP BY b.quarter, b.admin_target, b.capital_target
+    ORDER BY b.quarter DESC
+    LIMIT 1
+");
     $budgetSummary = $budgetStmt->fetch(PDO::FETCH_ASSOC);
 
     // Maintenance Requests (Recent 5)
