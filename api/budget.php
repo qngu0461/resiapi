@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // Check for cookie-based authentication
 if (!isset($_COOKIE['user_role']) || $_COOKIE['user_role'] !== 'committee_member') {
     header('Location: /login');
