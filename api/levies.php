@@ -1,10 +1,14 @@
 <?php
-header('Content_Type: application.json');
+header('Content-Type: application/json');
 
-$host = "ep-late-shadow-a7xntzmh-pooler.ap-southeast-2.aws.neon.tech";
+// Simplified CORS setup with environment variable
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, Authorization");
+$host = 'ep-long-tooth-a50lsk1q-pooler.us-east-2.aws.neon.tech';
 $dbname = 'neondb';
 $user = 'neondb_owner';
-$password = 'npg_7r5qCvcmHlbE';
+$password = 'npg_xGiQ5DLwfpN4';
 $port = '5432';
 
 try {
@@ -12,13 +16,13 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $stmt = $pdo->query("
-            SELECT quarter,
-                   SUM(admin) as admin,
-                   SUM(capital) as capital 
-            FROM levies
-            WHERE quarter LIKE '2025%'
-            GROUP BY quarter
-            ORDER BY quarter
+        SELECT quarter,
+               SUM(admin) as admin,
+               SUM(capital) as capital
+        FROM levies
+        WHERE quarter LIKE '2025%'
+        GROUP BY quarter
+        ORDER BY quarter
     ");
     $levies = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -29,7 +33,7 @@ try {
         if ($found) {
             $found = array_values($found)[0];
             $result[] = [
-                'quarter' => str_replace('2025-', '',$q),
+                'quarter' => str_replace('2025-', '', $q),
                 'admin' => (float)$found['admin'],
                 'capital' => (float)$found['capital']
             ];
