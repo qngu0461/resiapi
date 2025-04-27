@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Simple authentication (replace with real logic)
     if ($username === 'committee' && $password === 'password123') {
-        setCookie('user_role', 'committee_member', time() + 3600, '/');
+        setcookie('user_role', 'committee_member', time() + 3600, '/');
         header('Location: /dashboard.php');
         exit;
     } else {
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Strata Manager</title>
-    <script src="http://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" name="username" id="username" class="w-full px-4 py-2 border-l-0 rounded-r-md focus:ring-2 focus:ring-blue-500" required>
                 </div>
             </div>
-            <div class="mg-6 relative">
+            <div class="mb-6 relative">
                 <label class="block text-gray-700 mb-2" for="password">Password</label>
                 <div class="flex items-center border rounded-md">
                     <span class="px-3 text-gray-500">
