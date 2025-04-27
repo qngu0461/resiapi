@@ -23,7 +23,7 @@ try {
     $sql = "
         SELECT s.owner_name, m.description, m.status, m.created_at
         FROM maintenance_requests m
-        JOIN strata_roll s ON s.owner_id = s.id
+        JOIN strata_roll s ON m.owner_id = s.id
     ";
     if ($search_query) {
         $sql .= " WHERE m.search_vector @@ to_tsquery('english', :query)";
