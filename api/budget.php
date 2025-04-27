@@ -31,7 +31,7 @@ try {
         LEFT JOIN levies l ON b.quarter = l.quarter
         GROUP BY b.quarter, b.admin_target, b.capital_target
         ORDER BY b.quarter 
-    ")
+    ");
     $budgetData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     die('Database error: ' . $e->getMessage());
@@ -75,7 +75,7 @@ try {
                             <th class="border border-gray-300 px-4 py-3 text-left font-semibold">Capital Collected ($)</th>
                         </tr>
                     </thead>
-                    </tbody>
+                    <tbody>
                         <?php foreach ($budgetData as $data): ?>
                             <tr>
                                 <td class="border border-gray-300 px-4 py-3"><?= htmlspecialchars($data['quarter']) ?></td>
