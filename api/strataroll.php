@@ -14,7 +14,7 @@ try {
     $pdo = new PDO("pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $stmt = $pdo->query("SELECT id, ownder_name, email, unit_entilements FROM strata_roll ORDER BY owner_name");
+    $stmt = $pdo->query("SELECT id, owner_name, email, unit_entilements FROM strata_roll ORDER BY owner_name");
     $roll = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($roll);
