@@ -3,12 +3,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
 
+    // Simple authentication (replace with real logic)
     if ($username === 'committee' && $password === 'password123') {
-        setcookie('user_role', 'committee_member', time() + 3600, '/');
-        header('Location: /notices');
+        setCookie('user_role', 'committee_member', time() + 3600, '/');
+        header('Location: /dashboard.php');
         exit;
     } else {
-        $error = 'Invalid credentials';
+        $error = "Invalid credentials";
     }
 }
 ?>
@@ -19,42 +20,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Strata Manager</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(10px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <script src="http://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg fade-in">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mg-6">Login to Strata Manager</h1>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div class="flex justify-center mb-6">
+            <svg class="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+        </div>
+        <h1 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Login to Resilink Manager</h1>
         <?php if (isset($error)) : ?>
-            <p class="text-red-500 text-center mb-4"><?= htmlspecialchars($error) ?></p>
+            <p class="text-red-600 mb-4 text-center"><?php echo htmlspecialchars($error); ?></p>
         <?php endif; ?>
-        <form method="POST" class="space-y-6">
-            <div>
-                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                <input type="text" name="username" id="username" required
-                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-        </div>
-        <div>
-            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-            <input type="password" name="password" id="password" required
-                    class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-        </div>
-        <button type="submit"
-               class="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition">
-            Login
-        </button>
+        <form method="POST">
+            <div class="mb-4 relative">
+                <label class="block text-gray-700 mb-2" for="username">Username</label>
+                <div class="flex items-center border rounded-md">
+                    <span class="px-3 text-gray-500">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </span>
+                    <input type="text" name="username" id="username" class="w-full px-4 py-2 border-l-0 rounded-r-md focus:ring-2 focus:ring-blue-500" required>
+                </div>
+            </div>
+            <div class="mg-6 relative">
+                <label class="block text-gray-700 mb-2" for="password">Password</label>
+                <div class="flex items-center border rounded-md">
+                    <span class="px-3 text-gray-500">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-1.104-.896-2-2-2s-2 .896-2 2c0 .55.223 1.05.586 1.414C8.223 13.05 8 13.55 8 14v1h8v-1c0-.45-.223-.95-.586-1.586C15.777 12.05 16 11.55 16 11zm-2 0v2H8v-2h2zm2 6H8v-1h4v1z"></path>
+                        </svg>
+                    </span>
+                    <input type="password" name="password" id="password" class="w-full px-4 py-2 border-l-0 rounded-r-md focus:ring-2 focus:ring-blue-500" required>
+                </div>
+            </div>
+            <button type="submit" class="w-full py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 flex items-center justify-center space-x-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14"></path>
+                </svg>
+                <span>Login</span>
+            </button>
         </form>
-        <p class="mt-4 text-center text-gray-600 text-sm">
-            Strata Manager &copy; 2025
-        </p>
     </div>
 </body>
 </html>
+
+
+
+
+
+
+
+
