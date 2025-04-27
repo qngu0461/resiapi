@@ -17,7 +17,7 @@ try {
             b.quarter,
             b.admin_target,
             b.capital_target,
-            COALESCE(SUM(l.admin) FILTER (WHERE l.status = 'paid), 0) AS admin_collected,
+            COALESCE(SUM(l.admin) FILTER (WHERE l.status = 'paid'), 0) AS admin_collected,
             COALESCE(SUM(l.capital) FILTER (WHERE l.status = 'paid'), 0) AS capital_collected
         FROM budget b
         LEFT JOIN  levies l ON b.quarter = l.quarter
