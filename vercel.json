@@ -5,6 +5,7 @@
         }
     },
     "routes": [
+        { "src": "^/$", "dest": "/api/dashboard.php"},
         { "src": "/(.*)", "dest": "/api/$1" }
     ],
     "build": {
