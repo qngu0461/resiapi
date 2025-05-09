@@ -70,12 +70,32 @@ try {
         </div>
         <div class="bg-white rounded-lg shadow p-6">
             <h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Maintenance Requests</h2>
-            <ul class="space-y-2">
+            <ul class="space-y-3">
                 <?php foreach ($recentMaintenance as $request): ?>
-                    <li class="text-gray-600">
+                   <?php 
+                   // Determine the badge color on status
+                   $statusClass = '';
+                   switch (strtoLower($request['status'])) {
+                        case 'open':
+                            $statusClass = 'bg-blue text-blue-800';
+                            break;
+                        case 'in_porgress':
+                            $statusClass = 'bg-yellow-100 text-yellow-800';
+                            break;
+                        case 'overdue':
+                            $statusClass = 'bg-red-100 text-red-800';
+                            break;
+                        default:
+                            $statusClass =  'bg-gray-100 text-gray-800';
+                   }
+                   ?>
+                   <li class="flex items-center space-x-2 text-gray-700">
                         <span class="font-medium"><?php echo htmlspecialchars($request['owner_name']); ?>:</span>
-                        <?php echo htmlspecialchars($request['description']); ?> (<?php echo htmlspecialchars($request['status']); ?>)
-                    </li>
+                        <span><?php echo htmlspecialchars($request['description']); ?></span>
+                        <span class="inline-block px-2 py-1 text-xs font-semibold rounded-full <?php echo $statusClass; ?>">
+                            <?php echo htmlspecialchars(ucfirst(str_replace('_',' ', $request['status']))); ?>
+                        </span>
+                    </li>    
                 <?php endforeach; ?>
             </ul>
         </div>
